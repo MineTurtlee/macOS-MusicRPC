@@ -7,8 +7,7 @@
 
 import Foundation
 
-let executableDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-    // .deletingLastPathComponent()
+let executableDir = Bundle.main.executablePath
 let bundledDir = URL(fileURLWithPath: "/usr/local/share/musicrpc")
 
 let scriptPath = bundledDir.appendingPathComponent("mediaremote-adapter.pl").path

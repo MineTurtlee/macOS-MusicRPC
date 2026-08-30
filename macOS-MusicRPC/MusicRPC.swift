@@ -21,8 +21,8 @@ class MusicRPC {
     lazy var timer = DispatchSource.makeTimerSource(flags: .strict, queue: queue)
     
     // basically classmethod but wahtevrer
-    static func main() -> MusicRPC {
-        return MusicRPC()
+    static func main(clientId: String) -> MusicRPC {
+        return MusicRPC(clientId: clientId)
     }
     
     func makePres(_ info: NowPlayingInfo) -> Activity {
@@ -45,12 +45,12 @@ class MusicRPC {
         )
     }
     
-    init() {
+    init(clientId: String) {
         let path = FileManager.default.temporaryDirectory.path
         let endpoint = NWEndpoint.unix(path: "\(path)/discord-ipc-0")
         socket = NWConnection(to: endpoint, using: params)
         
-        clientId = CommandLine.arguments[1]
+        self.clientId = clientId
         socket?.stateUpdateHandler = stateUpdate
         
         MediaPlayr.shared.onUpdate = { [self] info in
